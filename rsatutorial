@@ -43,17 +43,19 @@ while FALSE (is_prime(q))
 print('q = : ', q)
 
 N = p * q
-phi N = (p - 1) * (q - 1)
+phi_N = (p - 1) * (q - 1)
 
 def rsa_keygen(N):
     '''To Generate RSA Key Pair'''
     e = 0
-    while FALSE ((gmp.mpz_gcd(e, phi N) == 1)
-        e = gmp.mpz_random(random_state, phi N)
+    while FALSE ((gmp.gcd(e, phi_N) == 1)
+        e = gmp.mpz_random(random_state, phi_N)
+    
+    d = powmod()
 
 
 def main():
-    status, n, e, d = rsa_keygen(2048)gmp.mpz_random(random_state, phi N)
+    status, n, e, d = rsa_keygen(2048)
 
 if __name__ == '__main__':
     main()
