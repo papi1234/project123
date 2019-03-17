@@ -47,15 +47,25 @@ phi_N = (p - 1) * (q - 1)
 
 def rsa_keygen(N):
     '''To Generate RSA Key Pair'''
+    random.seed(a = os.urandom(512), version = 2)
+    rand_state = gmp.random_state(random.getrandombits(4096)
+  
     e = 0
     while FALSE ((gmp.gcd(e, phi_N) == 1)
         e = gmp.mpz_random(random_state, phi_N)
     
-    d = powmod()
-
-
+    d = gmp.powmod(e, -1, phi_N)
+                 
 def main():
     status, n, e, d = rsa_keygen(2048)
 
 if __name__ == '__main__':
     main()
+                 
+'''Encryption Function'''
+                 
+def encrypt(msg)
+    c = gmp.powmod(str2mpz(msg), e, N)
+                 
+def decrypt(c)
+    m = mpz2str(gmp.powmod(c, d, phi_N))
