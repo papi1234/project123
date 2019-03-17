@@ -5,10 +5,12 @@ from gmpy2 import mpz
 import random
 import os
 
+rand_state = gmp.random_state(random.getrandbits(4096))
+
 def str2mpz(msg):
     '''To convert strings to mpz integers'''
     m = bytes(msg, 'ascii')
-    return gmp.mpz(int.from_bytes(m, bytorder='little'))
+    return gmp.mpz(int.from_bytes(m, byteorder='little'))
 
 def mpz2str(num):
     '''To convert the mpz integers back to string'''
@@ -22,40 +24,72 @@ def rand_n(n):
     lower = 2**(n-1)
     # initialising python's random number generator
     random.seed(a = os.urandom(512), version = 2)
-    rand_state = gmp.random_state(random.getrandombits(4096)
+    #rand_state = gmp.random_state(random.getrandombits(4096))
     # gmpy2 also has a random number generator, now we know how to use both
     x = gmp.mpz_random(rand_state, upper)
     if x < lower:
         x = x + lower
     return x
 
-'''p and q selection'''
-p = 0
-while FALSE (is_prime(p))
-    p = rand_n(128)
-
-print('p = : ', p)
-
-q = 0
-while FALSE (is_prime(q))
-    q =rand_n(is_prime(q))
-
-print('q = : ', q)
-
-N = p * q
-phi_N = (p - 1) * (q - 1)
 
 def rsa_keygen(N):
     '''To Generate RSA Key Pair'''
+
+    '''p and q selection'''
+    p = 0
+    while not gmp.is_prime(p):
+        p = rand_n(128)
+
+    print('p = : ', p)
+
+    q = 0
+    while not gmp.is_prime(q):
+        q = rand_n(128)
+
+    print('q = : ', q)
+
+    N = mpz(p * q)
+    phi_N = mpz(p - 1) * mpz(q - 1)
+
     e = 0
-    while FALSE ((gmp.gcd(e, phi_N) == 1)
-        e = gmp.mpz_random(random_state, phi_N)
-    
-    d = powmod()
+
+    while (gmp.gcd(e, phi_N) != 1):
+        e = gmp.mpz_random(rand_state, phi_N)
+
+    # http://esmondchu.com/RSA/
+    d = int(gmp.invert(e, phi_N))
+
+    status = True
+    #d = 0
+    return status, N, e, d
+
+
+# http://esmondchu.com/RSA/
+def rsa_enc(n, e, m):
+    enc_c = gmp.powmod(m, e, n)
+    return enc_c
+
+
+# http://esmondchu.com/RSA/
+def rsa_dec(n, d, c):
+    dec_m = gmp.powmod(c, d, n)
+    return dec_m
+
 
 
 def main():
     status, n, e, d = rsa_keygen(2048)
+    print(status, n, e, d)
+    #gmp.mpz_random(rand_state, phi_N)
+    m_asli = "dimaz"
+    m = str2mpz(m_asli)
+    print(m)
+    c = rsa_enc(n, e, m)
+    print(c)
+    d = rsa_dec(n, d, c)
+    d_asli = mpz2str(d)
+    print(d_asli)
+
 
 if __name__ == '__main__':
     main()
