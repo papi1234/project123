@@ -1,0 +1,59 @@
+#!/usr/bin/env python3
+
+import gmpy2 as gmp
+from gmpy2 import mpz
+import random
+import os
+
+def str2mpz(msg):
+    '''To convert strings to mpz integers'''
+    m = bytes(msg, 'ascii')
+    return gmp.mpz(int.from_bytes(m, bytorder='little'))
+
+def mpz2str(num):
+    '''To convert the mpz integers back to string'''
+    return str(gmp.to_binary(num)[2:], 'ascii')
+
+def rand_n(n):
+    '''return a n-bit random integer'''
+    # the upper limit that fits in n bits (n bits all 1)
+    upper = 2**n-1
+    # the lower limit with 1 in its most significant bit
+    lower = 2**(n-1)
+    # initialising python's random number generator
+    random.seed(a = os.urandom(512), version = 2)
+    rand_state = gmp.random_state(random.getrandombits(4096)
+    # gmpy2 also has a random number generator, now we know how to use both
+    x = gmp.mpz_random(rand_state, upper)
+    if x < lower:
+        x = x + lower
+    return x
+
+'''p and q selection'''
+p = 0
+while FALSE (is_prime(p))
+    p = rand_n(128)
+
+print('p = : ', p)
+
+q = 0
+while FALSE (is_prime(q))
+    q =rand_n(is_prime(q))
+
+print('q = : ', q)
+
+N = p * q
+phi N = (p - 1) * (q - 1)
+
+def rsa_keygen(N):
+    '''To Generate RSA Key Pair'''
+    e = 0
+    while FALSE ((gmp.mpz_gcd(e, phi N) == 1)
+        e = gmp.mpz_random(random_state, phi N)
+
+
+def main():
+    status, n, e, d = rsa_keygen(2048)gmp.mpz_random(random_state, phi N)
+
+if __name__ == '__main__':
+    main()
